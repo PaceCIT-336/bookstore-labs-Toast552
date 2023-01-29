@@ -1,0 +1,112 @@
+header {
+    text-align: center;
+}
+header a {
+    text-decoration: none;
+    color: inherit;
+}
+h2 {
+    text-align: center;
+}
+#cart {
+    width: 110px;
+    background-color: gray;
+    border-radius: 15px;
+    padding: 15px;
+    color: white;
+}
+#cart img {
+    position: relative;
+    width: 100%;
+    top: 10px;
+}
+#cart p {
+    text-align: left;
+    font-size: large;
+}
+#checkoutpg {
+    text-align: center;
+}
+#checkoutpg .table {
+    display: inline-block;
+    margin: auto;
+    text-align: left;
+}
+#checkoutpg .table .row:nth-child(even) {
+    background-color: #afcae6;
+}
+#checkoutpg .table .summary .cell, #checkoutpg .table .header .cell {
+    background-color: #91b0d1;
+    font-weight: bold;
+}
+h1 {
+    position: relative;
+    margin: auto;
+}
+.container, .shop {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+main div {
+    flex: 1;
+}
+section.tile {
+    margin: 20px auto;
+}
+section.tile img {
+    width: 85%;
+    max-width: 500px;
+}
+
+@media (min-width: 650px) {
+    .shop {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    #cart {
+        margin-left: auto;
+    }
+    #checkoutpg {
+        width: 80%;
+        margin: auto;
+    }
+    #checkoutpg .table .row {
+        display: table-row;
+    }
+    #checkoutpg .table .cell {
+        display: table-cell;
+        padding: 2px 20px;
+    }
+}
+
+@media (min-width: 1000px) {
+    header {
+        position: relative; 
+        height: 125px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    header::before {
+        content: "";
+        background-image: url("imgs/book.jpg");
+        background-size: cover;
+        border-radius: 15px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        opacity: 0.65;
+    }
+    header button {
+        position: relative;
+        margin-left: 10px;
+    }
+    .container {
+        flex-direction: row;
+    }
+    
+}
