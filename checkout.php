@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>Rainy Bookstore - Checkout</title>
@@ -13,30 +12,42 @@
 </header>
 <main id="checkoutpg">
 <?php
+session_start();
+
 // retrieve the cart items and total price passed from the shop page
-$cart = explode('|', htmlentities($_POST['cart']));
-$cartItems = count($cart); // number of items in the cart
-$price = htmlentities($_POST['total']);
-
-//calculate average price
-
-//print the information in table-like divs
-echo "<h2>Cart</h2><div class=\"table\"><div class=\"row header\"><div class=\"cell\">Title</div><div class=\"cell\">Price</div></div>";
-for ($i = 0; $i < count($cart); $i++) {
-    $title = $cart[$i];
-    echo "<div class=\"row\"><div class=\"cell\">$title</div><div class=\"cell\">$</div></div>";
+if (isset($_POST['cart']) && isset($_POST['total'])) {
+    $cart = unserialize($_POST['cart']);
+    $total_price = floatval($_POST['total']);
+} else {
+    header('Location: index.php');
+    exit();
 }
-// calculate tax and echo it in a new table row 
 
+// calculate the tax
+$tax_rate = 0.04;
+$tax = $total_price * $tax_rate;
 
-echo "<div class=\"row summary\"><div class=\"cell\">Total Price:</div><div class=\"cell\">$$price</div></div>";
+// calculate the average price and display the cart
+$avg_price = $total_price / count($cart);
+echo "<h2>Cart</h2><div class='table'><div class='row header'><div class='cell'>Title</div><div class='cell'>Price</div></div>";
+foreach ($cart as $book) {
+    echo "<div class='row'><div class='cell'>" . htmlspecialchars($book['title']) . "</div><div class='cell'>$" . number_format($avg_price, 2) . "</div></div>";
+}
+echo "<div class='row'><div class='cell'>Tax:</div><div class='cell'>$" . number_format($tax, 2) . "</div></div>";
+echo "<div class='row summary'><div class='cell'>Total Price:</div><div class='cell'>$" . number_format($total_price + $tax, 2) . "</div></div>";
 
 // thank the user for their purchase
+$name = "Your Name"; // replace with user's name
+if ($total_price > 0) {
+    echo "<p>Thank you for your purchase, " . htmlspecialchars($name) . "!</p>";
+} else {
+    echo "<p>Oops! It looks like you're here by accident. Click <a href='index.php'>here</a> to get back to the shop page.</p>";
+}
 
+// empty the cart
+unset($_SESSION['cart']);
 
-// this clears the session and ensures the cart is emptied for future shopping
-session_start();
-session_unset();
+session_destroy();
 ?>
 </main>
 </body>
