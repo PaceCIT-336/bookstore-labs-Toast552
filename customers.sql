@@ -9,6 +9,7 @@ CREATE TABLE customers (
     PhoneNumber VARCHAR(20),
     Email VARCHAR(255)
 );
+
 INSERT INTO customers (FirstName, LastName, Address, City, State, Zip, PhoneNumber, Email)
 VALUES
     ('John', 'Doe', '123 Main St', 'Anytown', 'CA', '12345', '555-555-1212', 'johndoe@example.com'),
