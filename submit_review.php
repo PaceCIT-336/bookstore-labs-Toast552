@@ -38,8 +38,5 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             echo "<p>Your review has been accepted.</p>";
             echo "<a href=\"review.php\"><button>Add Another Review</button></a>";
         }
-    } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
-}
-?>
+    } catch
+    
