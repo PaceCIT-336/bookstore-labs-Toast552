@@ -14,3 +14,4 @@ INSERT INTO customers (FirstName, LastName, Address, City, State, Zip, PhoneNumb
 VALUES
     ('John', 'Doe', '123 Main St', 'Anytown', 'CA', '12345', '555-555-1212', 'johndoe@example.com'),
     ('Jane', 'Smith', '456 Elm St', 'Othertown', 'NY', '67890', '555-555-2121', 'janesmith@example.com');
+ALTER TABLE Customers ADD Password VARCHAR(255);
