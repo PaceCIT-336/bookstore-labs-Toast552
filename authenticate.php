@@ -1,76 +1,85 @@
 <?php
-require_once 'login.php';
-session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
-function sanitize($conn, $var) {
+require_once 'login.php';
+
+// Connect to database using PDO
+$dsn = 'mysql:host=localhost;dbname=mydatabase';
+$username = 'myusername';
+$password = 'mypassword';
+$options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
+try {
+    $pdo = new PDO($dsn, $username, $password, $options);
+} catch (PDOException $e) {
+    echo 'Connection failed: ' . $e->getMessage();
+    exit();
+}
+
+// Function to sanitize user input
+function sanitize($var) {
     $var = strip_tags($var);
     $var = htmlentities($var);
     $var = stripslashes($var);
-    return $conn->real_escape_string($var);
+    return $var;
 }
 
+// Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = sanitize($pdo, $_POST['email']);
-    $password = sanitize($pdo, $_POST['password']);
-    $query = "SELECT CustomerID, FirstName, LastName, Password FROM Customers WHERE Email='$email'";
-    $result = $pdo->query($query);
-    if ($result->num_rows == 1) {
-        $row = $result->fetch();
+    // Sanitize user input
+    $email = sanitize($_POST['email']);
+    $password = sanitize($_POST['password']);
+
+    // Prepare and execute the SQL statement using a prepared statement
+    $stmt = $pdo->prepare("SELECT CustomerID, FirstName, LastName, Password FROM Customers WHERE Email=:email");
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    // Verify user credentials
+    if ($stmt->rowCount() == 1) {
+        $row = $stmt->fetch();
         if (password_verify($password, $row['Password'])) {
+            // Set session variables and redirect to homepage
+            session_start();
             $_SESSION['name'] = $row['FirstName'] . ' ' . $row['LastName'];
             $_SESSION['id'] = $row['CustomerID'];
             header("Location: index.php");
             exit();
         } else {
+            // Display error message for incorrect password
             echo "Invalid email or password. Please try again.";
         }
     } else {
+        // Display error message for incorrect email
         echo "Invalid email or password. Please try again.";
-    } 
+    }
 }
 
+// Generate hashed passwords
 $password1 = password_hash('Charlie123', PASSWORD_DEFAULT);
 $password2 = password_hash('Smokes123', PASSWORD_DEFAULT);
 
-// Create a PDO connection
-$dsn = 'mysql:host=localhost;dbname=mydatabase';
-$username = 'myusername';
-$password = 'mypassword';
-
+// Update passwords for a specific user using prepared statements
 try {
-    $pdo = new PDO($dsn, $username, $password);
+    $id = 1;
+    $stmt = $pdo->prepare("UPDATE Customers SET Password=:password WHERE CustomerID=:id");
+    $stmt->bindParam(':password', $password1);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+
+    $stmt = $pdo->prepare("UPDATE Customers SET Password=:password WHERE CustomerID=:id");
+    $stmt->bindParam(':password', $password2);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
 } catch (PDOException $e) {
-    echo 'Connection failed: ' . $e->getMessage();
+    echo 'Error updating password: ' . $e->getMessage();
 }
 
-// Prepare the SQL statement
-$sql = "UPDATE Customers SET Password=:password1, Password2=:password2 WHERE CustomerID=:id";
-$stmt = $pdo->prepare($sql);
+// Generate CSRF token
+$token = bin2hex(random_bytes(32));
+$_SESSION['token'] = $token;
 
-// Bind the parameters
-$stmt->bindParam(':password1', $password1);
-$stmt->bindParam(':password2', $password2);
-$stmt->bindParam(':id', $id);
-
-// Set the customer ID
-$id = 1;
-
-// Execute the statement
-$stmt->execute();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Authentication Form</title>
-</head>
-<body>
-    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email"><br>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password"><br>
-        <input type="submit" value="Log In">
-    </form>
-</body>
-</html>
