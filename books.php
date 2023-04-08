@@ -6,7 +6,7 @@ $result = $pdo->query($query);
 
 $books = array();
 
-while ($row = $result->fetch()) {
+while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     $id = htmlspecialchars($row['id']);
     $title = htmlspecialchars($row['title']);
     $author = htmlspecialchars($row['author']);
