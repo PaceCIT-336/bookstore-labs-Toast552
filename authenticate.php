@@ -80,6 +80,21 @@ $token = bin2hex(random_bytes(32));
 $_SESSION['token'] = $token;
 
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Add JavaScript code for mouse tracking -->
+    <script>
+        document.addEventListener('mousemove', function(event) {
+            var x = event.clientX;
+            var y = event.clientY;
+            console.log('Mouse coordinates: x=' + x + ', y=' + y);
+            // Do whatever you want with the mouse coordinates here
+        });
+    </script>
+</head>
+<body>
+    <!-- Your HTML code goes here -->
+</body>
+</html>
