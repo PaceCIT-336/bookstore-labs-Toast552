@@ -6,6 +6,7 @@ CREATE TABLE books (
     ImagePath VARCHAR(255),
     Price DECIMAL(10,2)
 );
+
 INSERT INTO books (Title, Author, Description, ImagePath, Price)
 VALUES
     ('The Great Gatsby', 'F. Scott Fitzgerald', 'A classic novel about the roaring twenties', 'images/greatgatsby.jpg', 12.99),

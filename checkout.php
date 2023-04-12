@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Rainy Bookstore - Checkout</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="assets/styles.css">
-</head>
-<body>
-<header>
-    <h1><a href="index.php">Rainy Bookstore</a></h1>
-</header>
-<main id="checkoutpg">
 <?php
 session_start();
 
@@ -49,6 +36,3 @@ unset($_SESSION['cart']);
 
 session_destroy();
 ?>
-</main>
-</body>
-</html>

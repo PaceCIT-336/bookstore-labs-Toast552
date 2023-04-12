@@ -83,3 +83,18 @@ $_SESSION['token'] = $token;
 <!DOCTYPE html>
 <html>
 <head>
+<!-- Add debug information for troubleshooting -->
+<meta charset="UTF-8">
+<title>Login Page</title>
+</head>
+<body>
+<!-- Add HTML content for login form -->
+<h1>Login</h1>
+<form method="post" action="login.php">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="hidden" name="token" value="<?php echo $token; ?>"> <!-- Add CSRF token to form -->
+    <input type="submit" value="Login">
+</form>
+</body>
+</html>
