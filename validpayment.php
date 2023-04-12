@@ -1,95 +1,91 @@
 <?php
-// Function to sanitize input
-function sanitize_input($input) {
-    // Use PHP's filter_var function to sanitize input
-    $input = filter_var($input, FILTER_SANITIZE_STRING);
-    // Use htmlspecialchars to prevent HTML and script injections
-    $input = htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-    return $input;
-}
+    // PHP code here
 
-// Function to validate email format
-function validate_email($email) {
-    // Use PHP's filter_var function with FILTER_VALIDATE_EMAIL flag to validate email format
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
-// Function to validate credit card format
-function validate_credit_card($credit_card) {
-    // Use regular expression to validate credit card format
-    // This regex ensures that the credit card number contains exactly 16 digits
-    return preg_match("/^[0-9]{16}$/", $credit_card);
-}
-
-// Function to validate CVV format
-function validate_cvv($cvv) {
-    // Use regular expression to validate CVV format
-    // This regex ensures that the CVV contains exactly 3 digits
-    return preg_match("/^[0-9]{3}$/", $cvv);
-}
-
-// Check form submission
-if (isset($_POST["submit"])) { // Check if form has been submitted
-    // Get form inputs and sanitize them
-    $full_name = sanitize_input($_POST["full_name"]);
-    $email = sanitize_input($_POST["email"]);
-    $credit_card = sanitize_input($_POST["credit_card"]);
-    $cvv = sanitize_input($_POST["cvv"]);
-    $password = sanitize_input($_POST["password"]);
-
-    // Validate inputs
-    $errors = array();
-
-    if (empty($full_name)) {
-        $errors[] = "Full name is required.";
+    // Function to fix string and strip HTML entities
+    function fix_string($string) {
+        // Add your implementation for fixing the string here
+        // For example, you can use htmlentities function:
+        return htmlentities($string);
     }
 
-    if (empty($email)) {
-        $errors[] = "Email is required.";
-    } elseif (!validate_email($email)) {
-        $errors[] = "Invalid email format.";
-    }
-
-    if (empty($credit_card)) {
-        $errors[] = "Credit card number is required.";
-    } elseif (!validate_credit_card($credit_card)) {
-        $errors[] = "Invalid credit card number format.";
-    }
-
-    if (empty($cvv)) {
-        $errors[] = "CVV is required.";
-    } elseif (!validate_cvv($cvv)) {
-        $errors[] = "Invalid CVV format.";
-    }
-
-    if (empty($password)) {
-        $errors[] = "Password is required.";
-    }
-
-    // If no errors, proceed with database comparison
-    if (empty($errors)) {
-        // Use prepared statements to prevent SQL injection
-        // Connect to database securely using PDO with prepared statements
-        $dsn = "mysql:host=localhost;dbname=your_database_name;charset=utf8mb4";
-        $options = array(
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_EMULATE_PREPARES => false,
-            PDO::ATTR_PERSISTENT => false
-        );
-
-        try {
-            $pdo = new PDO($dsn, 'your_username', 'your_password', $options);
-        } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
+    // Function to validate full name
+    function validateFullName($fullName) {
+        if (empty($fullName)) {
+            return "Full Name is required.";
         }
+        return "";
+    }
 
-        // Prepare SQL statement with email as parameter
-        $stmt = $pdo->prepare("SELECT CustomerID, FirstName, LastName, Password FROM customers WHERE Email = ?");
-        $stmt->execute([$email]);
+    // Function to validate email
+    function validateEmail($email) {
+        if (empty($email)) {
+            return "Email is required.";
+        } else if (!preg_match('/^[A-Za-z0-9\.\-\_]+@[A-Za-z0-9\-\_]+\.[A-Za-z0-9\-\_\.]+$/', $email)) {
+            return "Email format is incorrect.";
+        }
+        return "";
+    }
 
-        // Fetch the row
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Function to validate credit card number
+    function validateCreditCardNumber($creditCardNumber) {
+        if (empty($creditCardNumber)) {
+            return "Credit Card Number is required.";
+        } else if (!preg_match('/^[0-9]{16}$/', $creditCardNumber)) {
+            return "Credit Card Number must be 16 digits.";
+        }
+        return "";
+    }
 
-        // Check if row exists
-        if ($row) {
-            // Verify password
+    // Function to validate CVV
+    function validateCVV($cvv) {
+        if (empty($cvv)) {
+            return "CVV is required.";
+        } else if (!preg_match('/^[0-9]{3}$/', $cvv)) {
+            return "CVV must be 3 digits.";
+        }
+        return "";
+    }
+
+    // Check if form is submitted
+    if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["fullName"])) {
+        // Retrieve form data
+        $fullName = fix_string($_POST["fullName"]);
+        $email = fix_string($_POST["email"]);
+        $creditCardNumber = fix_string($_POST["creditCardNumber"]);
+        $cvv = fix_string($_POST["cvv"]);
+
+        // Validate each input and store errors in $fail variable
+        $fail = "";
+        $fail .= validateFullName($fullName);
+        $fail .= validateEmail($email);
+        $fail .= validateCreditCardNumber($creditCardNumber);
+        $fail .= validateCVV($cvv);
+
+        // If there are no errors, process payment information
+        if (empty($fail)) {
+            // Perform processing of payment information
+            // Add your processing logic here
+
+            // Debugging: Display success message
+            echo "Payment information submitted successfully!";
+        } else {
+            // Debugging: Display error messages
+            echo "Errors found: " . $fail;
+        }
+    }
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment Information</title>
+</head>
+<body>
+    <h1>Payment Information</h1>
+    <form method="post" action="">
+        <label for="fullName">Full Name:</label><br>
+        <input type="text" id="fullName" name="fullName" required placeholder="Enter Full Name" value="<?php echo isset($fullName) ? $fullName : '' ?>"><br><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required placeholder="Enter Email" value="<?php echo isset($email) ? $email : '' ?>"><br><br>
+        <label for="creditCardNumber">Credit Card Number:</label><br>
+        <input type="text" id="creditCardNumber" name="credit
