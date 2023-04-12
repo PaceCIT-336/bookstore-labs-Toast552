@@ -1,45 +1,43 @@
-
 .container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .review__item {
-    scroll-snap-align: start;
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding: 20px;
-    margin-right: 10px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-  
-  .review__button {
-    background-color: #000;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    font-size: 2rem;
-    padding: 10px;
-    margin: 20px;
-    cursor: pointer;
-  }
-  
-  .review__button--prev {
-    position: absolute;
-    left: 0;
-  }
-  
-  .review__button--next {
-    position: absolute;
-    right: 0;
-  }
-  
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.review__item {
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+  max-width: 100%;
+  padding: 20px;
+  margin-right: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.review__button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 2rem;
+  padding: 10px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.review__button--prev {
+  position: absolute;
+  left: 0;
+}
+
+.review__button--next {
+  position: absolute;
+  right: 0;
+}

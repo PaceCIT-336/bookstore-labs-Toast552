@@ -65,5 +65,12 @@
     }
 
     prevButton.addEventListener('click', () => {
+      // Fix: added logic to update carousel items
+      articles[currentIndex].classList.remove('active');
       currentIndex = (currentIndex - 1 + articles.length) % articles.length;
-      updateCarousel
+      articles[currentIndex].classList.add('active');
+    });
+
+    nextButton.addEventListener('click', () => {
+      // Fix: added logic to update carousel items
+     
