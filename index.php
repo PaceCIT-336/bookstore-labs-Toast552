@@ -1,7 +1,7 @@
 <div class="review">
   <div class="carousel" role="listbox" aria-label="Book Reviews">
     <?php $counter = 0; foreach ($books as $id => $book) { ?>
-      <section class="review__item" role="option" aria-label="<?= htmlspecialchars($book->getTitle(), ENT_QUOTES); ?>">
+      <section class="review__item<?= $counter === 0 ? ' active' : ''; ?>" role="option" aria-label="<?= htmlspecialchars($book->getTitle(), ENT_QUOTES); ?>">
         <h2><?= htmlspecialchars($book->getTitle(), ENT_QUOTES); ?></h2>
         <figure>
           <img src="<?= htmlspecialchars($book->getImagePath(), ENT_QUOTES); ?>" alt="<?= htmlspecialchars($book->getTitle(), ENT_QUOTES); ?>">
@@ -65,12 +65,12 @@
     }
 
     prevButton.addEventListener('click', () => {
-      // Fix: added logic to update carousel items
+      console.log('Previous button clicked');
       articles[currentIndex].classList.remove('active');
       currentIndex = (currentIndex - 1 + articles.length) % articles.length;
       articles[currentIndex].classList.add('active');
     });
 
     nextButton.addEventListener('click', () => {
-      // Fix: added logic to update carousel items
-     
+      console.log('Next button clicked');
+      articles[currentIndex

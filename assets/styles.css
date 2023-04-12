@@ -112,3 +112,6 @@ section.tile img {
 
     header::before {
         content: "";
+        /* Add more CSS properties as needed */
+    }
+}
