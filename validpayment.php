@@ -20,7 +20,7 @@
     function validateEmail($email) {
         if (empty($email)) {
             return "Email is required.";
-        } else if (!preg_match('/^[A-Za-z0-9\.\-\_]+@[A-Za-z0-9\-\_]+\.[A-Za-z0-9\-\_\.]+$/', $email)) {
+        } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return "Email format is incorrect.";
         }
         return "";
@@ -88,4 +88,4 @@
         <label for="email">Email:</label><br>
         <input type="email" id="email" name="email" required placeholder="Enter Email" value="<?php echo isset($email) ? $email : '' ?>"><br><br>
         <label for="creditCardNumber">Credit Card Number:</label><br>
-        <input type="text" id="creditCardNumber" name="credit
+        <input type="text" id="creditCardNumber" name="creditCardNumber" required placeholder="Enter Credit Card Number" value="<?php echo isset($creditCardNumber) ? $creditCardNumber : '' ?>"><br

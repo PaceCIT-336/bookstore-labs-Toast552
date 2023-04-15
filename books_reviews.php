@@ -15,11 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $pdo->prepare($query);
     $stmt->execute([$bookId, $rating, $review]);
 
-    // Redirect to thank you page
-    header('Location: thank_you.php');
+    // Redirect to thank you page or display thank you message
+    echo "Thank you for your review!";
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <h1>Book Review</h1>
-    <form method="post" action="books_review.php">
+    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
         <label for="book_id">Book ID:</label>
         <input type="text" id="book_id" name="book_id" required>
         <br>

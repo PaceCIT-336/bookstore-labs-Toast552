@@ -66,4 +66,18 @@
 
     prevButton.addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + articles.length) % articles.length;
-      updateCarousel
+      updateCarousel();
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % articles.length;
+      updateCarousel();
+    });
+
+    function updateCarousel() {
+      articles.forEach(article => article.classList.remove('active'));
+      articles[currentIndex].classList.add('active');
+    }
+  }
+
+ 

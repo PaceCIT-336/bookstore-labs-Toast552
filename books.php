@@ -1,5 +1,6 @@
 <?php
 require_once 'login.php';
+require_once 'Books.php'; 
 
 // Assuming $pdo is properly initialized with a PDO object
 
