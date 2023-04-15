@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* CSS style for cursor drag effect */
+    .cursor-drag {
+      cursor: url('purple_cursor.png'), auto;
+    }
+  </style>
+  <script>
+    // JavaScript function for cursor drag effect
+    function applyCursorDrag() {
+      var loginForm = document.getElementById("loginForm");
+      loginForm.classList.add("cursor-drag");
+    }
+
+    // Attach the cursor drag effect to the form's mouseover event
+    var loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("mouseover", applyCursorDrag);
+
+    // JavaScript function for form submission
+    function submitForm() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      // Perform client-side validation, e.g., checking for empty fields, validating username and password format, etc.
+      // ...
+      // Submit the form data to the server for server-side validation and authentication
+      // Note: This is a basic example and should be replaced with proper server-side validation and authentication
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "login.php", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            // Successful login, redirect to dashboard or home page
+            window.location.href = "dashboard.php";
+          } else {
+            // Failed login, display error message to user
+            alert("Invalid username or password. Please try again.");
+          }
+        }
+      };
+      xhr.send("username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password));
+    }
+  </script>
+</head>
+<body>
+
+<h1>Login Page</h1>
+
+<form id="loginForm" onsubmit="event.preventDefault(); submitForm();">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required>
+  <br>
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required>
+  <br>
+  <input type="submit" value="Login">
+</form>
+
+</body>
+</html>
