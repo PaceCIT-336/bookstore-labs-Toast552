@@ -76,3 +76,9 @@
 
     nextButton.addEventListener('click', () => {
       currentIndex = (
+        <form name="filterform" id="filterform">
+  <input type="text" name="filter" placeholder="Search...">
+  <button type="submit" name="search"><i class="fa fa-search"></i></button>
+</form>
+
+

@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+session_start(); // Add session_start() function call
+
 require_once 'login.php';
 
 // Connect to database using PDO
@@ -40,7 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $stmt->fetch();
         if (password_verify($password, $row['Password'])) {
             // Set session variables and redirect to homepage
-            session_start();
             $_SESSION['name'] = $row['FirstName'] . ' ' . $row['LastName'];
             $_SESSION['id'] = $row['CustomerID'];
             header("Location: index.php");
@@ -92,9 +93,4 @@ $_SESSION['token'] = $token;
 <h1>Login</h1>
 <form method="post" action="login.php">
     <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="hidden" name="token" value="<?php echo $token; ?>"> <!-- Add CSRF token to form -->
-    <input type="submit" value="Login">
-</form>
-</body>
-</html>
+    <input type="password" name="password" placeholder="Password" required

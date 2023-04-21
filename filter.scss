@@ -1,23 +1,22 @@
-function filter() {
-    let products = document.getElementsByClassName("review__item");
-    let searchPhrase = document.filterform.filter.value.toLowerCase();
-    try {
-    for (let i = 0; i < products.length; i++) {
-    let productName = products[i].textContent.toLowerCase();
-    if (searchPhrase === "") {
-    products[i].style.display = "block";
-    } else if (productName.includes(searchPhrase)) {
-    products[i].style.display = "block";
+function filter(event) {
+    event.preventDefault();
+    const products = document.querySelectorAll(".review__item");
+    const searchTerm = document.filterform.filter.value.trim().toLowerCase();
+    if (!searchTerm) {
+      // Display only the first review
+      carousel(0);
     } else {
-    products[i].style.display = "none";
+      products.forEach(product => {
+        const productName = product.textContent.trim().toLowerCase();
+        const matchesSearchTerm = productName.includes(searchTerm);
+        product.style.display = matchesSearchTerm ? "block" : "none";
+      });
     }
-    }
-    document.filterform.filter.value = searchPhrase;
-    filter.arguments[0].preventDefault();
-    } catch (error) {
-    console.error(error);
-    }
-    }
-    
-    document.filterform.search.addEventListener("click", filter);
-    console.log("Filter function loaded successfully!");
+    // Set the value of the text input to the search term
+    document.filterform.filter.value = searchTerm;
+  }
+  
+  // Register an event listener to run the filter function when the form is submitted
+  document.filterform.addEventListener("submit", filter);
+  console.log("Filter function loaded successfully!");
+  
