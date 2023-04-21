@@ -16,7 +16,6 @@ function filter(event) {
     document.filterform.filter.value = searchTerm;
   }
   
-  // Register an event listener to run the filter function when the form is submitted
   document.filterform.addEventListener("submit", filter);
   console.log("Filter function loaded successfully!");
   
