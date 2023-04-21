@@ -19,12 +19,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 //add a new item to the cart
+/**
+ * Summary of addToCart
+ * @param mixed $title
+ * @param mixed $price
+ * @return void
+ */
 function addToCart($title, $price) {
     $_SESSION["items"][] = $title; // add book title to the items array
     $_SESSION["total"] += $price;
 }
 
 //reset the cart to empty
+/**
+ * Summary of clearCart
+ * @return void
+ */
 function clearCart() {
     $_SESSION["items"] = array();
     $_SESSION["total"] = 0;

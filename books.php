@@ -20,6 +20,6 @@ try {
   }
 } catch(PDOException $e) {
   // Handle database error
-  echo "Error: " . $e->getMessage();
+  echo "Error: " . htmlspecialchars($e->getMessage(), ENT_QUOTES, 'UTF-8');
 }
 ?>
