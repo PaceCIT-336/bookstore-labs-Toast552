@@ -86,10 +86,4 @@ try {
     $stmt->bindParam(':ip', getUserIP());
     $stmt->execute();
 
-    $stmt = $pdo->prepare("UPDATE Customers SET Password=:password, IP=:ip WHERE CustomerID=:id");
-    $stmt->bindParam(':password', $password2);
-    $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':ip', getUserIP());
-    $stmt->execute();
-} catch (PDOException $e) {
-    echo 'Error: ' . $e->
+    $stmt = $pdo->prepare("UPDATE Customers SET Password=:password
