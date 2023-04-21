@@ -36,6 +36,11 @@
   <button class="next" aria-label="Next">&gt;</button>
 </div>
 
+<form name="filterform" id="filterform">
+  <input type="text" name="filter" placeholder="Search...">
+  <button type="submit" name="search"><i class="fa fa-search"></i></button>
+</form>
+
 <script>
   function createCarousel(carouselSelector, prevSelector, nextSelector) {
     const carousel = document.querySelector(carouselSelector);
@@ -66,4 +71,8 @@
 
     prevButton.addEventListener('click', () => {
       currentIndex = (currentIndex - 1 + articles.length) % articles.length;
-      updateCarousel
+      updateCarousel();
+    });
+
+    nextButton.addEventListener('click', () => {
+      currentIndex = (

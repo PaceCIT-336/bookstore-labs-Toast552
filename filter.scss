@@ -1,0 +1,23 @@
+function filter() {
+    let products = document.getElementsByClassName("review__item");
+    let searchPhrase = document.filterform.filter.value.toLowerCase();
+    try {
+    for (let i = 0; i < products.length; i++) {
+    let productName = products[i].textContent.toLowerCase();
+    if (searchPhrase === "") {
+    products[i].style.display = "block";
+    } else if (productName.includes(searchPhrase)) {
+    products[i].style.display = "block";
+    } else {
+    products[i].style.display = "none";
+    }
+    }
+    document.filterform.filter.value = searchPhrase;
+    filter.arguments[0].preventDefault();
+    } catch (error) {
+    console.error(error);
+    }
+    }
+    
+    document.filterform.search.addEventListener("click", filter);
+    console.log("Filter function loaded successfully!");
