@@ -26,7 +26,7 @@
           <br>
           <input type="hidden" name="book_id" value="<?= htmlspecialchars($id, ENT_QUOTES); ?>">
           <input type="hidden" name="index" value="<?= $counter ?>">
-          <input type="submit" value="Submit Review">
+          <input type="submit" value="Submit Review" onclick="return validateInput()">
         </form>
         <?php $counter++; ?>
       </section>
@@ -76,42 +76,4 @@
 
     function updateCarousel() {
       articles.forEach(article => article.classList.remove('active'));
-      articles[currentIndex].classList.add('active');
-    }
-  }
-
- 
-  <!-- copy into index head -->
-<link rel="stylesheet" type="text/css" href="assets/modal.css">
-<script src="assets/textSamples.js" defer></script>
-
-<!-- copy at the bottom of index body -->
-<!-- The Modal -->
-    <div id="sample" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <span id="closeSample" class="close">&times;</span>
-                <h2>Text Sample</h2>
-                <h3 id="bookTitle"></h3>
-            </div>
-            <div class="container">
-                <div id="sampleBody" class="modal-body">
-                    
-                </div>
-            </div>
-        </div>
-        <script>
-            let modal = document.getElementById('sample')
-            let close = document.getElementById('closeSample')
-            function hideSample() {
-                modal.style.display = 'none'
-            }
-            close.onclick = hideSample
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
-    </div>
+      articles[currentIndex].classList
