@@ -30,20 +30,31 @@
     // connect to database
     $conn = mysqli_connect("localhost", "username", "password", "database");
     // get user details
-$user_id = $_GET['id'];
-$user_query = "SELECT * FROM users WHERE id = $user_id";
-$user_result = mysqli_query($conn, $user_query);
-$user = mysqli_fetch_assoc($user_result);
-
-// get user's purchases
-$purchases_query = "SELECT BookID, OrderDate FROM purchases WHERE CustomerID = $user_id";
-$purchases_result = mysqli_query($conn, $purchases_query);
+    $user_id = $_GET['id'];
+    // use prepared statement to avoid SQL injection
+    $user_query = "SELECT * FROM users WHERE id = ?";
+    $stmt = $conn->prepare($user_query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $user_result = $stmt->get_result();
+    $user = mysqli_fetch_assoc($user_result);
+    // get user's purchases
+// use prepared statement to avoid SQL injection
+$purchases_query = "SELECT BookID, OrderDate FROM purchases WHERE CustomerID = ?";
+$stmt = $conn->prepare($purchases_query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$purchases_result = $stmt->get_result();
 $purchases = array();
 while ($purchase = mysqli_fetch_assoc($purchases_result)) {
   // get book title for each purchased book
   $book_id = $purchase['BookID'];
-  $book_query = "SELECT Title FROM books WHERE BookID = $book_id";
-  $book_result = mysqli_query($conn, $book_query);
+  // use prepared statement to avoid SQL injection
+  $book_query = "SELECT Title FROM books WHERE BookID = ?";
+  $stmt = $conn->prepare($book_query);
+  $stmt->bind_param("i", $book_id);
+  $stmt->execute();
+  $book_result = $stmt->get_result();
   $book = mysqli_fetch_assoc($book_result);
   $purchase['Title'] = $book['Title'];
   // add purchase to purchases array
@@ -52,20 +63,4 @@ while ($purchase = mysqli_fetch_assoc($purchases_result)) {
 
 // display user details and purchase history
 echo "<h1>User Details</h1>";
-echo "<p>Name: " . $user['Name'] . "</p>";
-echo "<p>Email: " . $user['Email'] . "</p>";
-echo "<h2>Purchase History</h2>";
-echo "<table>";
-echo "<tr><th>Title</th><th>Order Date</th></tr>";
-foreach ($purchases as $purchase) {
-  echo "<tr><td>" . $purchase['Title'] . "</td><td>" . $purchase['OrderDate'] . "</td></tr>";
-}
-echo "</table>";
-
-// Query database for user details
-$conn = new mysqli($hn, $un, $pw, $db);
-if ($conn->connect_error) {
-    die($conn->connect_error);
-}
-
-$query = "SELECT firstName, lastName, address, city, state,
+echo "<p>Name: " . htmlspecialchars($user['Name']) . "</
