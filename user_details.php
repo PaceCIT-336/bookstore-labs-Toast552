@@ -63,4 +63,4 @@ while ($purchase = mysqli_fetch_assoc($purchases_result)) {
 
 // display user details and purchase history
 echo "<h1>User Details</h1>";
-echo "<p>Name: " . htmlspecialchars($user['Name']) . "</
+echo "<p>Name: " . htmlspecialchars($user['Name']) . "<"; 
