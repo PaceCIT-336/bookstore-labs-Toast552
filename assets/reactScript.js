@@ -1,6 +1,10 @@
 class Header extends React.Component {
     render() {
-        return (<header><h1><a href="index.php">Rainy Bookstore</a></h1></header>);
+        return (
+            <header>
+                <h1><a href="index.php">Rainy Bookstore</a></h1>
+            </header>
+        );
     }
 }
 
@@ -11,11 +15,28 @@ class UserDetails extends React.Component {
         return (
             <div>
                 <h2>Personal Details</h2>
-                {/* print the user details from the props here */}
-                
+                <p>First Name: {this.props.firstName}</p>
+                <p>Last Name: {this.props.lastName}</p>
+                <p>Address: {this.props.address}</p>
+                <p>Email: {this.props.email}</p>
+                <p>Phone: {this.props.phone}</p>
             </div>
         );
     }
+}
+
+function UserPurchases(props) {
+    return (
+        <div>
+            <h2>Purchase History</h2>
+            {props.purchases.map((purchase, index) => (
+                <div key={index}>
+                    <p>Title: {purchase.Title}</p>
+                    <p>Purchase Date: {purchase.OrderDate}</p>
+                </div>
+            ))}
+        </div>
+    );
 }
 
 class UserPage extends React.Component {
@@ -32,13 +53,25 @@ class UserPage extends React.Component {
                         email={this.props.email}
                         phone={this.props.phone}
                     />
-                 </div>
+                    <UserPurchases purchases={this.props.purchases} />
+                </div>
             </>
         );
     }
 }
 
-
 function doRender(element, target) {
     ReactDOM.render(element, document.getElementById(target));
 }
+
+ReactDOM.render(
+    <UserPage 
+        firstName={firstName} 
+        lastName={lastName} 
+        address={address} 
+        email={email} 
+        phone={phone} 
+        purchases={JSON.parse(purchases)} 
+    />,
+    document.getElementById('user')
+);

@@ -1,7 +1,7 @@
 <?php
 $data = 'bookstore';
-$user = 'webapp'; //this is the user you created for lab 3 step 6
-$pass = ''; //the password you set in lab 3 step 6
+$user = 'John Doe';
+$pass = 'X'; 
 
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=$data", $user, $pass);
